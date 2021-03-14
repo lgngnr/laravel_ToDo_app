@@ -22,7 +22,7 @@
             @if($posts->count())
                 @foreach($posts as $post)
                     <div class="mb-4 mt-4">
-                        <a href="" class="font-black">{{ $post->user->name }}</a>
+                        <a href="" class="font-black">{{ ucfirst($post->user->name) }}</a>
                         <span class="text-gray-600">created at {{ $post->created_at->diffForHumans() }}</span>
                         <p class="mb-2">{{ $post->body }}</p>
                     </div>
