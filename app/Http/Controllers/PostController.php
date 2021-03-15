@@ -16,13 +16,13 @@ class PostController extends Controller
     public function index()
     {
         # EAGER LOADING [ WILL REDUCE QUERY AND TIME LOADING ]
-        $posts = Post::with(['user', 'likes'])->orderByDesc('created_at')->paginate(20); // Collection
+        $posts = Post::with(['user', 'likes'])->latest()->paginate(20); // Collection
         return view('posts.index', [
             'posts' => $posts
         ]);
     }
 
-    public function save(Request $request)
+    public function add(Request $request)
     {
         $this->validate($request, [
            'body' => 'required'
@@ -32,6 +32,13 @@ class PostController extends Controller
             'body' => $request->body
         ]);
 
+        return back();
+    }
+
+    public function delete(Post $post)
+    {
+        $this->authorize('delete');
+        $post->delete();
         return back();
     }
 }

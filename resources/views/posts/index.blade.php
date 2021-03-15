@@ -3,7 +3,7 @@
 @section('content')
     <div class="flex justify-center">
         <div class="w-8/12 bg-white p-6 rounded-lg">
-            <form action="{{route('posts')}}" method="post">
+            <form action="{{route('post.add')}}" method="post">
                 @csrf
                 <div class="mb-4">
                     <label for="body" class="sr-only">Body</label>
@@ -27,18 +27,27 @@
                         <p class="mb-2">{{ $post->body }}</p>
                         <div class="flex justify-start">
                             @if(!$post->likedBy(auth()->user()))
-                                <form action="{{ route('posts.like', $post->id) }}" method="post" class="mr-1">
+                                <form action="{{ route('post.like', $post) }}" method="post" class="mr-1">
                                     @csrf
                                     <button type="submit" class="text-blue-500">Like</button>
                                 </form>
                             @else
-                                <form action="{{ route('posts.unlike', $post->id) }}" method="post" class="mr-1">
+                                <form action="{{ route('post.unlike', $post) }}" method="post" class="mr-1">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-blue-500">Unlike</button>
                                 </form>
                             @endif
                             <span>{{ $post->likes->count() }} {{ Str::plural('like', $post->likes->count()) }}</span>
+                            @can('delete',$post)
+                                <div class="ml-2">
+                                    <form action="{{ route('post.delete', $post) }}" method="post" class="mr-1">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="bg-red-500 text-white px-2 py-2 rounded font-medium">Delete</button>
+                                    </form>
+                                </div>
+                            @endcan
                         </div>
                     </div>
                 @endforeach

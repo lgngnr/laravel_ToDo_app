@@ -38,7 +38,8 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts');
-Route::post('/posts', [PostController::class, 'save'])->name('posts');
+Route::post('/post', [PostController::class, 'add'])->name('post.add');
+Route::delete('/post/{post}', [PostController::class, 'delete'])->name('post.delete');
 
-Route::post('/posts/{post}/like', [PostLikeController::class, 'like'])->name('posts.like');
-Route::delete('/posts/{post}/unlike', [PostLikeController::class, 'unlike'])->name('posts.unlike');
+Route::post('/post/{post}/like', [PostLikeController::class, 'like'])->name('post.like');
+Route::delete('/post/{post}/unlike', [PostLikeController::class, 'unlike'])->name('post.unlike');
