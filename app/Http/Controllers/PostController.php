@@ -15,7 +15,8 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = Post::paginate(20); // Collection
+        # EAGER LOADING [ WILL REDUCE QUERY AND TIME LOADING ]
+        $posts = Post::with(['user', 'likes'])->orderByDesc('created_at')->paginate(20); // Collection
         return view('posts.index', [
             'posts' => $posts
         ]);
@@ -31,6 +32,6 @@ class PostController extends Controller
             'body' => $request->body
         ]);
 
-        return view('posts.index');
+        return back();
     }
 }
