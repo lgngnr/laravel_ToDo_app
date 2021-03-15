@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostLikeController;
+use App\Http\Controllers\UserPostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
@@ -43,3 +44,5 @@ Route::delete('/post/{post}', [PostController::class, 'delete'])->name('post.del
 
 Route::post('/post/{post}/like', [PostLikeController::class, 'like'])->name('post.like');
 Route::delete('/post/{post}/unlike', [PostLikeController::class, 'unlike'])->name('post.unlike');
+
+Route::get('/user/{user}/posts', [UserPostController::class, 'index'])->name('user.posts');
