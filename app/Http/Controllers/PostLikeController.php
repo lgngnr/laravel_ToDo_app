@@ -22,7 +22,11 @@ class PostLikeController extends Controller
                 'user_id' => $request->user()->id,
             ]);
 
-            Mail::to($request->user())->send(new PostLiked($request->user(), $post));
+            # ONLY IF LIKE FIRST TIME
+            if(!$post->likes()->onlyTrashed()->where('user_id', $request->user()->id)->count())
+            {
+                Mail::to($request->user())->send(new PostLiked($request->user(), $post));
+            }
         }
 
         return back();
